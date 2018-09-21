@@ -186,7 +186,7 @@ public class GUI extends javax.swing.JFrame {
     private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
         // TODO add your handling code here:
         try {
-            bl.add(sliderTemp.getValue(), sliderLuft.getValue());
+            bl.add(new WetterWert(sliderTemp.getValue(),sliderLuft.getValue()));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Fehler:" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
         }
