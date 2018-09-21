@@ -4,7 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.security.Timestamp;
 import java.time.ZoneOffset;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 
@@ -39,7 +41,8 @@ public class WetterModel extends AbstractListModel{
     public void save(File f) throws Exception{
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         for (WetterWert w : wetterdaten) {
-            bw.append(w.getTemp()+","+w.getLuft()+","+w.getTime().getLong(null)+"\n");
+            java.sql.Timestamp t = java.sql.Timestamp.valueOf(w.getTime());
+            bw.append(w.getTemp()+","+w.getLuft()+","+t.getTime()+"\n");
         }
         bw.flush();
         bw.close();

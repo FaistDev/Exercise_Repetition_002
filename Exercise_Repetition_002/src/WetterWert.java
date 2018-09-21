@@ -1,4 +1,5 @@
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -32,7 +33,8 @@ public class WetterWert {
     public WetterWert(String temp, String luft, long time){
         temperatur=Integer.parseInt(temp);
         luftfeuchtigkeit=Integer.parseInt(luft);
-        timestamp=LocalDateTime.ofEpochSecond(time, 0, ZoneOffset.UTC);
+        Timestamp t = new Timestamp(time);
+        timestamp=t.toLocalDateTime();
     }
     
     public int getTemp(){
