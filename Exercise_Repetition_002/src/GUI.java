@@ -71,7 +71,6 @@ public class GUI extends javax.swing.JFrame {
         sliderTemp.setMinorTickSpacing(10);
         sliderTemp.setPaintLabels(true);
         sliderTemp.setPaintTicks(true);
-        sliderTemp.setSnapToTicks(true);
         sliderTemp.setToolTipText("");
         sliderTemp.setValue(18);
         sliderTemp.addChangeListener(new javax.swing.event.ChangeListener() {

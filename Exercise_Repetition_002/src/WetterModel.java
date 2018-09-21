@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import javax.swing.AbstractListModel;
 
@@ -38,7 +39,7 @@ public class WetterModel extends AbstractListModel{
     public void save(File f) throws Exception{
         BufferedWriter bw = new BufferedWriter(new FileWriter(f));
         for (WetterWert w : wetterdaten) {
-            bw.append(w.getTemp()+","+w.getLuft()+","+w.getTime().getLong()+"\n");
+            bw.append(w.getTemp()+","+w.getLuft()+","+w.getTime().getLong(null)+"\n");
         }
         bw.flush();
         bw.close();
@@ -48,8 +49,8 @@ public class WetterModel extends AbstractListModel{
         BufferedReader br = new BufferedReader(new FileReader(f));
         String line=null;
         while((line=br.readLine())!=null){
-            String parts = line.split(",");
-            wetterdaten.add(new WetterWert(parts[0],parts[1],parts[2]));
+            String[] parts = line.split(",");
+            wetterdaten.add(new WetterWert(parts[0],parts[1],Long.parseLong(parts[2])));
         }
         br.close();
         fireIntervalAdded(this, 0, wetterdaten.size()-1);
