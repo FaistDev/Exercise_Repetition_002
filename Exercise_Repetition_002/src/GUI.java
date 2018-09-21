@@ -1,9 +1,12 @@
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Ben
@@ -13,8 +16,11 @@ public class GUI extends javax.swing.JFrame {
     /**
      * Creates new form GUI
      */
+    private WetterModel bl = new WetterModel();
+
     public GUI() {
         initComponents();
+        listMain.setModel(bl);
     }
 
     /**
@@ -37,6 +43,9 @@ public class GUI extends javax.swing.JFrame {
         listMain = new javax.swing.JList();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        miSave = new javax.swing.JMenuItem();
+        miLoad = new javax.swing.JMenuItem();
+        miExit = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,6 +57,11 @@ public class GUI extends javax.swing.JFrame {
         sliderLuft.setPaintTicks(true);
         sliderLuft.setToolTipText("");
         sliderLuft.setValue(52);
+        sliderLuft.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderLuftStateChanged(evt);
+            }
+        });
 
         jLabel2.setText("Luftfeuchtigkeit:");
 
@@ -60,8 +74,18 @@ public class GUI extends javax.swing.JFrame {
         sliderTemp.setSnapToTicks(true);
         sliderTemp.setToolTipText("");
         sliderTemp.setValue(18);
+        sliderTemp.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderTempStateChanged(evt);
+            }
+        });
 
         btAdd.setText("Einfügen");
+        btAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddActionPerformed(evt);
+            }
+        });
 
         listMain.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -71,6 +95,31 @@ public class GUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listMain);
 
         jMenu1.setText("Datei");
+
+        miSave.setText("Speichern");
+        miSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSaveActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miSave);
+
+        miLoad.setText("Laden");
+        miLoad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miLoadActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miLoad);
+
+        miExit.setText("Exit");
+        miExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miExitActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miExit);
+
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -124,6 +173,56 @@ public class GUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sliderTempStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderTempStateChanged
+        // TODO add your handling code here:
+        tvTemperatur.setText("" + sliderTemp.getValue() + "°");
+    }//GEN-LAST:event_sliderTempStateChanged
+
+    private void sliderLuftStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderLuftStateChanged
+        // TODO add your handling code here:
+        tvLuftfeuchtigkeit.setText("" + sliderLuft.getValue() + "%");
+    }//GEN-LAST:event_sliderLuftStateChanged
+
+    private void btAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddActionPerformed
+        // TODO add your handling code here:
+        try {
+            bl.add(sliderTemp.getValue(), sliderLuft.getValue());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Fehler:" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btAddActionPerformed
+
+    private void miSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveActionPerformed
+        // TODO add your handling code here:
+        try {
+            JFileChooser chooser = new JFileChooser();
+            int res = chooser.showSaveDialog(null);
+            if (res == JFileChooser.APPROVE_OPTION) {
+                bl.save(chooser.getSelectedFile());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Fehler:" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_miSaveActionPerformed
+
+    private void miLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLoadActionPerformed
+        // TODO add your handling code here:
+        try {
+            JFileChooser chooser = new JFileChooser();
+            int res = chooser.showOpenDialog(null);
+            if (res == JFileChooser.APPROVE_OPTION) {
+                bl.load(chooser.getSelectedFile());
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Fehler:" + e.getMessage(), null, JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_miLoadActionPerformed
+
+    private void miExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miExitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_miExitActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -167,6 +266,9 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList listMain;
+    private javax.swing.JMenuItem miExit;
+    private javax.swing.JMenuItem miLoad;
+    private javax.swing.JMenuItem miSave;
     private javax.swing.JSlider sliderLuft;
     private javax.swing.JSlider sliderTemp;
     private javax.swing.JLabel tvLuftfeuchtigkeit;
