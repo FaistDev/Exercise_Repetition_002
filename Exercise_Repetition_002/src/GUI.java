@@ -194,7 +194,7 @@ public class GUI extends javax.swing.JFrame {
     private void miSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSaveActionPerformed
         // TODO add your handling code here:
         try {
-            JFileChooser chooser = new JFileChooser();
+            JFileChooser chooser = new JFileChooser("D:\\Privat\\Schule\\POS\\Git\\Exercise_Repetition_002\\Exercise_Repetition_002");
             int res = chooser.showSaveDialog(null);
             if (res == JFileChooser.APPROVE_OPTION) {
                 bl.save(chooser.getSelectedFile());
@@ -207,7 +207,7 @@ public class GUI extends javax.swing.JFrame {
     private void miLoadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miLoadActionPerformed
         // TODO add your handling code here:
         try {
-            JFileChooser chooser = new JFileChooser();
+            JFileChooser chooser = new JFileChooser("D:\\Privat\\Schule\\POS\\Git\\Exercise_Repetition_002\\Exercise_Repetition_002");
             int res = chooser.showOpenDialog(null);
             if (res == JFileChooser.APPROVE_OPTION) {
                 bl.load(chooser.getSelectedFile());
